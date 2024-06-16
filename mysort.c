@@ -3,37 +3,33 @@
 #include <stdlib.h>
 #define  MAX_STUDENT 10
 
-int compareStudentsBySID(const void* a, const void* b) {
-    Student* studentA = (Student*)a;
-    Student* studentB = (Student*)b;
-    return strcmp(studentA->sid, studentB->sid);
+
+// comparison function by department for SRecord
+int compareSRecordsBydepartment(const void* a, const void* b) {
+    SRecord* srecordA = (SRecord*)a;
+    SRecord* srecordB = (SRecord*)b;
+    return strcmp(srecordA->student.department, srecordB->student.department);
 }
-int compareStudentsBydepartment(const void* a, const void* b) {
-    Student* studentA = (Student*)a;
-    Student* studentB = (Student*)b;
-    return strcmp(studentA->department, studentB->department);
+// comparison function by total for SRecord
+int compareSRecordsBytotal(const void* a, const void* b) {
+    SRecord* srecordA = (SRecord*)a;
+    SRecord* srecordB = (SRecord*)b;
+    if(srecordA->total < srecordB->total)   return 1;
+    if(srecordA->total > srecordB->total)   return -1;
+    return 0;
 }
-int compareStudentsByname(const void* a, const void* b) {
-    Student* studentA = (Student*)a;
-    Student* studentB = (Student*)b;
-    return strcmp(studentA->name, studentB->name);
+// comparison function by sid for SRecord
+int compareSRecordsBysid(const void* a, const void* b) {
+    SRecord* srecordA = (SRecord*)a;
+    SRecord* srecordB = (SRecord*)b;
+    return strcmp(srecordA->student.sid, srecordB->student.sid);
 }
-int compareStudentsBygrade(const void* a, const void* b) {
-    Student* studentA = (Student*)a;
-    Student* studentB = (Student*)b;
-    return studentA->grade - studentB->grade;
-}
-void sortStudents(Student* students, int numStudents, const char* sortBy) {
-    if (strcmp(sortBy, "SID") == 0) {
-        qsort(students, numStudents, sizeof(Student), compareStudentsBySID);
-    } else if (strcmp(sortBy, "department") == 0) {
-        qsort(students, numStudents, sizeof(Student), compareStudentsBydepartment);
-    } else if (strcmp(sortBy, "name") == 0) {
-        qsort(students, numStudents, sizeof(Student), compareStudentsByname);
-    } else if (strcmp(sortBy, "grade") == 0) {
-        qsort(students, numStudents, sizeof(Student), compareStudentsBygrade);
-    } else {
-        // Handle invalid sortBy parameter
-        printf("Invalid sortBy parameter: %s\n", sortBy);
+void sortSRcord(SRecord* srecords, int numSRecords, const char* sortBy) {
+    if(strcmp(sortBy, "department") == 0) {
+        qsort(srecords, numSRecords, sizeof(SRecord), compareSRecordsBydepartment);
+    } else if(strcmp(sortBy, "total") == 0) {
+        qsort(srecords, numSRecords, sizeof(SRecord), compareSRecordsBytotal);
+    } else if(strcmp(sortBy, "sid") == 0) {
+        qsort(srecords, numSRecords, sizeof(SRecord), compareSRecordsBysid);
     }
 }
