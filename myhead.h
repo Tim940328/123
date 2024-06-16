@@ -13,7 +13,6 @@ typedef struct {
 
 typedef struct {
     Student student;
-    //作業,平時測驗,期中測驗,期末報告,其他(出席及平時表現),原始成績
     double hw, quiz, midterm, final, other, total;
 
 } SRecord;
